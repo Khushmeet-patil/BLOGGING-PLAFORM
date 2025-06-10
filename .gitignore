@@ -1,24 +1,39 @@
+# Node modules folder (ignore all node_modules folders)
+node_modules/
+
 # Logs
 logs
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Environment variables files
+.env
+.env.local
+.env.*.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Build output folders
+dist/
+build/
+
+# Optional npm cache folder
+.npm
+
+# Mac OS system files
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+
+# Windows system files
+Thumbs.db
+
+# IDE/editor settings (optional, customize if needed)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# If you have frontend React build artifacts
+frontend/build/
+
+# If you have backend build artifacts (e.g., TypeScript output)
+backend/dist/
