@@ -15,14 +15,17 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Set base URL for axios (adjust if different)
-  axios.defaults.baseURL = 'http://localhost:5000/api'; // 🔁 Change as per your backend URL
+  axios.defaults.baseURL = 'http://localhost:5000/api';
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
-    if (savedUser) {
+    const savedToken = localStorage.getItem('token');
+
+    if (savedUser && savedToken) {
       setUser(JSON.parse(savedUser));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${savedToken}`; // ✅ Add this
     }
+
     setIsLoading(false);
   }, []);
 
@@ -34,6 +37,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // ✅ Add this
       setUser(user);
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Login failed');
@@ -50,6 +54,7 @@ export const AuthProvider = ({ children }) => {
 
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`; // ✅ Add this
       setUser(user);
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Registration failed');
@@ -61,6 +66,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization']; // ✅ Clean it
     setUser(null);
   };
 
